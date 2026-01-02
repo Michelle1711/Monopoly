@@ -1,0 +1,7 @@
+public class Tabellone{
+    Casella caselle[];
+
+    public Tabellone(Casella caselle[]){
+        this.caselle = caselle;
+    }
+}
