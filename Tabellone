@@ -1,7 +1,64 @@
 public class Tabellone{
-    Casella caselle[];
+    private Casella[] tabellone;
 
-    public Tabellone(Casella caselle[]){
-        this.caselle = caselle;
+    public Tabellone(){
+        this.tabellone = new Casella[40];
+    }
+
+    private void inizializzaTabellone(){
+        tabellone[0] = new Casella("VIA!");
+        //blocco Marrone e Azzurro
+        tabellone[1] = new Terreno("Vicolo Corto", 60, "Marrone");
+        tabellone[2] = new Probabilita();
+        tabellone[3] = new Terreno("Vicolo Stretto", 60, "Marrone");
+        tabellone[4] = new Tasse(200); 
+        tabellone[5] = new StazioneTreno("Stazione Sud");
+        tabellone[6] = new Terreno("Bastioni Gran Sasso", 100, "Azzurro");
+        tabellone[7] = new Imprevisti();
+        tabellone[8] = new Terreno("Viale Monterosa", 100, "Azzurro");
+        tabellone[9] = new Terreno("Viale Vesuvio", 120, "Azzurro");
+
+        // prigione e blocco Rosa e Arancio
+        tabellone[10] = new Prigione("Transito Prigione");
+        tabellone[11] = new Terreno("Via Accademia", 140, "Rosa");
+        tabellone[12] = new Societa("Società Elettrica");
+        tabellone[13] = new Terreno("Corso Ateneo", 140, "Rosa");
+        tabellone[14] = new Terreno("Piazza Università", 160, "Rosa");
+        tabellone[15] = new StazioneTreno("Stazione Ovest");
+        tabellone[16] = new Terreno("Via Verdi", 180, "Arancio");
+        tabellone[17] = new Probabilita();
+        tabellone[18] = new Terreno("Corso Raffaello", 180, "Arancio");
+        tabellone[19] = new Terreno("Piazza Dante", 200, "Arancio");
+
+        // blocco Rosso e Giallo
+        tabellone[20] = new Casella("Parcheggio Gratuito");
+        tabellone[21] = new Terreno("Via Marco Polo", 220, "Rosso");
+        tabellone[22] = new Imprevisti();
+        tabellone[23] = new Terreno("Corso Magellano", 220, "Rosso");
+        tabellone[24] = new Terreno("Largo Colombo", 240, "Rosso");
+        tabellone[25] = new StazioneTreno("Stazione Nord");
+        tabellone[26] = new Terreno("Viale Costantino", 260, "Giallo");
+        tabellone[27] = new Terreno("Viale Traiano", 260, "Giallo");
+        tabellone[28] = new Societa("Società Acqua Potabile");
+        tabellone[29] = new Terreno("Piazza Giulio Cesare", 280, "Giallo");
+
+        // Vai in Prigione e blocco Verde e Viola
+        tabellone[30] = new Prigione("VAI IN PRIGIONE!");
+        tabellone[31] = new Terreno("Via Roma", 300, "Verde");
+        tabellone[32] = new Terreno("Corso Impero", 300, "Verde");
+        tabellone[33] = new Probabilita();
+        tabellone[34] = new Terreno("Largo Augusto", 320, "Verde");
+        tabellone[35] = new StazioneTreno("Stazione Est");
+        tabellone[36] = new Imprevisti();
+        tabellone[37] = new Terreno("Viale dei Giardini", 350, "Viola");
+        tabellone[38] = new Tasse(100); // Tassa di lusso
+        tabellone[39] = new Terreno("Parco della Vittoria", 400, "Viola");
+
+        for (int i = 0; i < 40; i++) {
+            tabellone[i].setSuccessiva(tabellone[(i + 1) % 40]);
+            tabellone[i].setPrecedente(tabellone[(i - 1 + 40) % 40]);
+        }
+        
+        this.listaTabellone = tabellone[0];
     }
 }
