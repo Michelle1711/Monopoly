@@ -3,6 +3,7 @@ public class Tabellone{
 
     public Tabellone(){
         this.tabellone = new Casella[40];
+        inizializzaTabellone();
     }
 
     private void inizializzaTabellone(){
