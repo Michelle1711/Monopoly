@@ -6,6 +6,7 @@ class Giocatore{
     private int nCasella;
     private int nDoppio;
     private int numCaselle=0;
+    private int ciao;
 
     //costruttore, toString
 
