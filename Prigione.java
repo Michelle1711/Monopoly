@@ -1,4 +1,4 @@
-public class Prigione{
+public class Prigione extends Casella {
     int turni;
 
     public Prigione(int turni){
