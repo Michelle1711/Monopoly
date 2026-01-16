@@ -1,14 +1,22 @@
 class Giocatore{
     private String pedina;
     private int denaro;
-    private Terreni[] terreni;
+    private Terreno[] terreni;
     private Casella casella;
-    private int nCasella;
+    private Casella prigione;
     private int nDoppio;
     private int numCaselle=0;
-    private int ciao;
-
     //costruttore, toString
+
+    // bozza costruttore fatta da zancaner
+    public Giocatore(String pedina, int denaro, Terreno[] terreni, Casella casella, int nDoppio, int numCaselle) {
+        this.pedina = pedina;
+        this.denaro = denaro;
+        this.terreni = terreni;
+        this.casella = casella;
+        this.nDoppio = nDoppio;
+        this.numCaselle = numCaselle;
+    }
 
     public boolean isPrigione(){
         if(casella instanceof Prigione){
