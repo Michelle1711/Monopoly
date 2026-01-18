@@ -1,5 +1,5 @@
 public class Prigione extends Casella {
-    int turni;
+    private int turni;
 
     public Prigione(String nome, Casella successiva, Casella precedente, int numeroCasella) {
         super(nome, successiva, precedente, numeroCasella);
