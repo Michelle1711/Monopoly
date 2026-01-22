@@ -1,4 +1,5 @@
 class Giocatore{
+    private String nome;
     private String pedina;
     private int denaro;
     private Terreno[] terreni;
@@ -8,7 +9,8 @@ class Giocatore{
     //costruttore, toString
 
     // bozza costruttore fatta da zancaner
-    public Giocatore(String pedina, int denaro, Terreno[] terreni, Casella casella) {
+    public Giocatore(String nome, String pedina, int denaro, Terreno[] terreni, Casella casella) {
+        this.nome = nome;
         this.pedina = pedina;
         this.denaro = denaro;
         this.terreni = terreni;

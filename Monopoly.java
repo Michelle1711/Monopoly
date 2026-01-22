@@ -5,5 +5,24 @@ public class Monopoly{
         Tabellone tabellone = new Tabellone();
         System.out.println(tabellone.stampaTabellone());
         tabellone.stampaGrafica();
+
+        int nGiocatori=0;
+        do{
+            System.out.println("Insersci il numero di giocatori (2-6):");
+            nGiocatori=Leggi.unInt();
+        }while(nGiocatori<2 || nGiocatori>6);
+
+        Giocatore[] giocatori = new Giocatore[nGiocatori];
+        for(int i=0;i<nGiocatori;i++){
+            System.out.println("Inserisci il nome del giocatore " + (i+1) + ":");
+            String nome=Leggi.unoString();
+            int sceltaPedina=0;
+            do{
+                System.out.println("Scegli la pedina per " + nome + " (1-Carro, 2-Cane, 3-Cappello, 4-Barca, 5-Cane, 6-Zaino):");
+                sceltaPedina=Leggi.unInt();
+            }while(sceltaPedina<1 || sceltaPedina>6);
+
+            giocatori[i]=new Giocatore(nome, String.valueOf(sceltaPedina), 1500, new Terreno[40], tabellone.getCasella(0));
+        }
     }
 }
