@@ -17,6 +17,14 @@ class Giocatore{
         this.casella = casella;
     }
 
+    public String getNome(){
+        return nome;
+    }
+
+    public Casella getCasella(){
+        return casella;
+    }
+
     public boolean isPrigione(){
         if(casella instanceof Prigione){
             return true;
@@ -53,6 +61,7 @@ class Giocatore{
         while(valore!=0){
             Casella csuc=casella.getSuccessiva();
             casella=csuc;
+            numCaselle++;
             valore--;
         }
     }
@@ -70,6 +79,7 @@ class Giocatore{
     public void riceviAffitto(int affitto){
         denaro+=affitto;
     }
+
     public boolean acquistaTerreno(Terreno t){
         if(denaro>=t.getValoreAcquisto()){
             denaro-=t.getValoreAcquisto();
@@ -130,14 +140,12 @@ class Giocatore{
         return (proprietaM==2 || proprietaA==3 || proprietaR==3 || proprietaAR==3 || proprietaG==3 || proprietaV==3 || proprietaB==2);
     }
     
-    public int pagaTassa(int tassa){
+    public boolean  pagaTassa(int tassa){
         if(tassa<denaro){
             denaro-=tassa;
-            return tassa;
+            return true;
         }else{
-            int temp=denaro;
-            denaro=0;
-            return temp;
+            return false;
         }
     }
 

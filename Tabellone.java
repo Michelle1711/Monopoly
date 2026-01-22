@@ -62,6 +62,10 @@ public class Tabellone{
         return tabellone[indice];
     }
 
+    public Casella[] getTabellone(){
+        return tabellone;
+    }
+
     public String stampa(){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tabellone.length; i++) {

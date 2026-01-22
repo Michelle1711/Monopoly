@@ -23,5 +23,7 @@ public class Monopoly{
 
             giocatori[i]=new Giocatore(nome, String.valueOf(sceltaPedina), 1500, new Terreno[40], tabellone.getCasella(0));
         }
+        Partita partita=new Partita(giocatori,new Banca(),tabellone.getTabellone());
+        partita.avviaPartita();
     }
 }
