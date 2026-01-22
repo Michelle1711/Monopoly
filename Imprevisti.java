@@ -38,6 +38,6 @@ public class Imprevisti extends Casella {
 
     @Override
     public String toString() {
-        return "Mazzo Imprevisti";
+        return super.toString();
     }
 }

@@ -38,6 +38,6 @@ public class Probabilita extends Casella {
 
     @Override
     public String toString() {
-        return "Mazzo Probabilità";
+        return super.toString();
     }
 }

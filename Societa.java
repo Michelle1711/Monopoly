@@ -26,4 +26,8 @@ public class Societa extends Casella {
     public int affitto() {
         return rendita;
     }
+
+    public String toString(){
+        return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
+    }
 }

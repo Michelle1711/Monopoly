@@ -45,11 +45,8 @@ public class Casella
     }
 
     public String toString() {
-        return "Casella{" +
-                "nome='" + nome + '\'' +
-                ", successiva=" + successiva +
-                ", precedente=" + precedente +
-                ", numeroCasella=" + numeroCasella +
-                '}';
+        return "Casella " +
+                "nome='" + nome +
+                "\nnumeroCasella=" + numeroCasella + "\n";
     }
 }

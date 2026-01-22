@@ -236,7 +236,7 @@ public class Terreno extends Casella{
         return costoCasa;
     }
 
-
-
-
+    public String toString(){
+        return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
+    }
 }

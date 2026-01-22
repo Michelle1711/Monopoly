@@ -26,5 +26,9 @@ public class StazioneTreno extends Casella {
     public int getPrezzoAcquisto() {
         return valoreAcquisto;
     }
+
+    public String toString(){
+        return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
+    }
 }
 
