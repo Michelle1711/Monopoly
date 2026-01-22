@@ -1,5 +1,5 @@
 public class StazioneTreno {
-
+//commento per push
     private boolean acquistato;
     private int rendita;
     private int valoreAcquisto;

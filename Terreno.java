@@ -58,16 +58,48 @@ public class Terreno extends Casella{
             } else if(colore == Colore.ROSSO || colore == Colore.GIALLO){
 
             } else{
-                ;
+
             }
         } else if (nCase == 2){
+            if(colore == Colore.MARRONE || colore == Colore.AZZURRO){
 
+            } else if(colore == Colore.ROSA || colore == Colore.ARANCIONE){
+
+            } else if(colore == Colore.ROSSO || colore == Colore.GIALLO){
+
+            } else{
+
+            }
         } else if (nCase == 3){
+            if(colore == Colore.MARRONE || colore == Colore.AZZURRO){
 
+            } else if(colore == Colore.ROSA || colore == Colore.ARANCIONE){
+
+            } else if(colore == Colore.ROSSO || colore == Colore.GIALLO){
+
+            } else{
+
+            }
         } else if (nCase == 4){
+            if(colore == Colore.MARRONE || colore == Colore.AZZURRO){
 
+            } else if(colore == Colore.ROSA || colore == Colore.ARANCIONE){
+
+            } else if(colore == Colore.ROSSO || colore == Colore.GIALLO){
+
+            } else{
+
+            }
         } else if (nCase == 5){
+            if(colore == Colore.MARRONE || colore == Colore.AZZURRO){
 
+            } else if(colore == Colore.ROSA || colore == Colore.ARANCIONE){
+
+            } else if(colore == Colore.ROSSO || colore == Colore.GIALLO){
+
+            } else{
+
+            }
         }
         return rendita;
     }

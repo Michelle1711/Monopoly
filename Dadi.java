@@ -1,5 +1,5 @@
 import java.util.Random;
-
+//commento per push
 public class Dadi {
 
     private int valore1;
