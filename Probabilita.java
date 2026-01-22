@@ -1,9 +1,10 @@
-public class Probabilita {
+public class Probabilita extends Casella {
 //commento per push
     private String[] mazzoProbabilita;
     private int[] soldiProbabilita;
 
-    public Probabilita() {
+    public Probabilita(String nome, Casella successiva, Casella precedente, int numeroCasella) {
+        super(nome, successiva, precedente, numeroCasella);
         mazzoProbabilita = new String[] {
                 "Ricevi 100",
                 "Paga 20",

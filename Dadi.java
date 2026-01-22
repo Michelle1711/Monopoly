@@ -18,6 +18,7 @@ public class Dadi {
     }
 
     public int getValoreDado() {
+        lancia();
         return valore1 + valore2;
     }
 

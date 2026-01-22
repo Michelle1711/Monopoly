@@ -1,4 +1,4 @@
-public class StazioneTreno {
+public class StazioneTreno extends Casella {
 //commento per push
     private boolean acquistato;
     private int rendita;
@@ -6,7 +6,8 @@ public class StazioneTreno {
     private int valoreIpoteca;
     private Giocatore proprietario;
 
-    public StazioneTreno() {
+    public StazioneTreno(String nome, Casella successiva, Casella precedente, int numeroCasella) {
+        super(nome, successiva, precedente, numeroCasella);
         acquistato = false;
         rendita = 25;
         valoreAcquisto = 200;
