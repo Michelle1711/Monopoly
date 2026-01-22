@@ -62,7 +62,7 @@ public class Tabellone{
         return tabellone[indice];
     }
 
-    public String stampaTabellone(){
+    public String stampa(){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tabellone.length; i++) {
             sb.append(i).append(": ").append(tabellone[i].toString()).append("\n");
@@ -70,7 +70,7 @@ public class Tabellone{
         return sb.toString();
     }
 
-    public void stampaGrafica() {
+    public void stampaTabellone() {
         int lato = 11; // Il tabellone ha 11 caselle per lato (angoli inclusi)
         String[][] griglia = new String[lato][lato];
 
