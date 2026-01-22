@@ -1,8 +1,8 @@
 public class Parita{
-    Giocatore listaGiocatori[];
-    Banca banca;
-    int indiceTurno;
-    Casella tabellone[];
+    private Giocatore listaGiocatori[];
+    private Banca banca;
+    private int indiceTurno;
+    private Casella tabellone[];
 
     public Parita(Giocatore listaGiocatori[], Banca banca, Casella tabellone[]){
         this.listaGiocatori = listaGiocatori;

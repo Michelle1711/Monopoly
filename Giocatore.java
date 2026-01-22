@@ -51,16 +51,19 @@ class Giocatore{
             nDoppio=0;
         }
         while(valore!=0){
-            Casella csuc=casella.getSucessivo();
+            Casella csuc=casella.getSuccessiva();
             casella=csuc;
             valore--;
         }
     }
 
-    public int pagaAffitto(Giocatore g,int affitto){
+    public boolean pagaAffitto(Giocatore g,int affitto){
         if(affitto<denaro){
             denaro-=affitto;
             g.riceviAffitto(affitto);
+            return true;
+        }else{
+            return false;
         }
     }
 
