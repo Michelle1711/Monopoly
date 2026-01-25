@@ -105,7 +105,8 @@ class Giocatore{
     public boolean setCompleto(){
         int proprietaM=0;
         int proprietaA=0;
-        int proprietaR=0;
+        int proprietaRosa=0;
+        int proprietaRosso=0;
         int proprietaAR=0;
         int proprietaG=0;
         int proprietaV=0;
@@ -120,7 +121,7 @@ class Giocatore{
                         proprietaA++;
                         break;
                     case ROSA:
-                        proprietaR++;
+                        proprietaRosa++;
                         break;
                     case ARANCIONE:
                         proprietaAR++;
@@ -134,10 +135,15 @@ class Giocatore{
                     case BLU:
                         proprietaB++;
                         break;
+                    case ROSSO:
+                        proprietaRosso++;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
-        return (proprietaM==2 || proprietaA==3 || proprietaR==3 || proprietaAR==3 || proprietaG==3 || proprietaV==3 || proprietaB==2);
+        return (proprietaM==2 || proprietaA==3 || proprietaRosso==3 || proprietaRosa==3 || proprietaAR==3 || proprietaG==3 || proprietaV==3 || proprietaB==2);
     }
     
     public boolean  pagaTassa(int tassa){
