@@ -13,14 +13,11 @@ public class Partita{
 
     public void avviaPartita(){
         System.out.println("La partita è iniziata!");
-        for(int i=0;i<listaGiocatori.length;i++){
-            eseguiTurno(listaGiocatori[i]);
-        }
+        eseguiCicloTurno();
 
     }
 
     public void prossimoTurno(){
-        // Logica per gestire il turno del giocatore corrente
         indiceTurno = (indiceTurno + 1) % listaGiocatori.length;
     }
 
@@ -165,11 +162,42 @@ public class Partita{
         }
     }
 
-    public void verificaVincitore(){
-        // Logica per verificare se c'è un vincitore
+    public boolean verificaVincitore(){
+        int giocatoriRimasti=0;
+        Giocatore vincitore=null;
+        for(int i=0;i<listaGiocatori.length;i++){
+            if(listaGiocatori[i]!=null){
+                giocatoriRimasti++;
+                vincitore=listaGiocatori[i];
+            }
+        }
+        if(giocatoriRimasti==1){
+            return true;
+        }
+    }
+
+    public void vincitore(){
+        int giocatoriRimasti=0;
+        Giocatore vincitore=null;
+        for(int i=0;i<listaGiocatori.length;i++){
+            if(listaGiocatori[i]!=null){
+                giocatoriRimasti++;
+                vincitore=listaGiocatori[i];
+            }
+        }
+        if(giocatoriRimasti==1){
+            System.out.println("Il vincitore è " + vincitore.getNome() + "!");
+        }
     }
 
     public void eseguiCicloTurno(){
-        // Logica per eseguire un ciclo completo di turni
+        while(verificaVincitore()==false){
+            Giocatore giocatoreCorrente = listaGiocatori[indiceTurno];
+            if(giocatoreCorrente != null){
+                eseguiTurno(giocatoreCorrente);
+                verificaVincitore();
+            }
+            prossimoTurno();
+        }
     }
 }
