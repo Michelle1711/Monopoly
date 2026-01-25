@@ -29,14 +29,27 @@ public class Partita{
         Casella casellaCorrente = giocatore.getCasella();
         if(casellaCorrente instanceof Terreno){
             System.out.println(giocatore.getNome() + " è atterrato su " + casellaCorrente.getNome());
-            System.out.println("Vuoi acquistare questo terreno? (s/n)");
-            String risposta = Leggi.unoString();
-            if(risposta.equalsIgnoreCase("s")){
-                Terreno terreno = (Terreno) casellaCorrente;
-                if(giocatore.acquistaTerreno(terreno)){
-                    System.out.println(giocatore.getNome() + " ha acquistato " + terreno.getNome());
-                }else{
-                    System.out.println(giocatore.getNome() + " non ha abbastanza denaro per acquistare " + terreno.getNome());
+            if(((Terreno) casellaCorrente).getProprietario()==null){
+                System.out.println("Questo terreno è disponibile per l'acquisto.");
+                System.out.println("Vuoi acquistare questo terreno? (s/n)");
+                String risposta = Leggi.unoString();
+                if(risposta.equalsIgnoreCase("s")){
+                    Terreno terreno = (Terreno) casellaCorrente;
+                    if(giocatore.acquistaTerreno(terreno)){
+                        System.out.println(giocatore.getNome() + " ha acquistato " + terreno.getNome());
+                    }else{
+                        System.out.println(giocatore.getNome() + " non ha abbastanza denaro per acquistare " + terreno.getNome());
+                    }
+                }
+            }else{
+                Giocatore proprietario = ((Terreno) casellaCorrente).getProprietario();
+                if(proprietario != giocatore){
+                    int affitto = ((Terreno) casellaCorrente).valoreRendita();
+                    System.out.println("Questo terreno è di proprietà di " + proprietario.getNome() + ". Deve pagare un affitto di " + affitto);
+                    if(!giocatore.pagaAffitto(proprietario, affitto)){
+                        System.out.println(giocatore.getNome() + " non ha abbastanza denaro per pagare l'affitto!");
+                        gestisciBancarotta(giocatore);
+                    }
                 }
             }
         } else if(casellaCorrente instanceof Tasse){
@@ -64,16 +77,31 @@ public class Partita{
                 System.out.println(giocatore.getNome() + " riceve " + soldi + "€.");
                 giocatore.riceviAffitto(soldi);
             }
-
         }else if(casellaCorrente instanceof Probabilita){
             System.out.println(giocatore.getNome() + " ha pescato una carta Probabilità.");
-            // Logica per gestire le carte Probabilità
+            Probabilita probabilita = (Probabilita) casellaCorrente;
+            int numero = (int) (Math.random() * 6);
+            System.out.println(probabilita.pescaCarta(numero));
+            int soldi=probabilita.getSoldi(numero);
+            if(soldi<0){
+                System.out.println(giocatore.getNome() + " deve pagare " + (-soldi) + "€.");
+                if(!giocatore.pagaTassa(-soldi)){
+                    System.out.println(giocatore.getNome() + " non ha abbastanza denaro per pagare!");
+                    gestisciBancarotta(giocatore);
+                }
+                giocatore.pagaTassa(-soldi);
+                banca.riceviDenaro(-soldi);
+            }else if(soldi>0){
+                System.out.println(giocatore.getNome() + " riceve " + soldi + "€.");
+                giocatore.riceviAffitto(soldi);
+            }        
         }else if(casellaCorrente instanceof Prigione){
             System.out.println(giocatore.getNome() + " è in prigione.");
-            // Logica per gestire la prigione
+            casellaCorrente = tabellone[10];
+            giocatore.isPrigione();
         }else if(casellaCorrente instanceof StazioneTreno){
             System.out.println(giocatore.getNome() + " è atterrato su una Stazione Treno.");
-            // Logica per gestire le stazioni treno
+            
         }else if(casellaCorrente instanceof Casella){
             System.out.println(giocatore.getNome() + " è atterrato su " + casellaCorrente.getNome());
         }
@@ -86,10 +114,6 @@ public class Partita{
 
     public void verificaVincitore(){
         // Logica per verificare se c'è un vincitore
-    }
-
-    public void applicaEffettoCasella(Giocatore giocatore, Casella casella){
-        // Logica per applicare l'effetto della casella su cui il giocatore è atterrato
     }
 
     public void eseguiCicloTurno(){
