@@ -27,6 +27,10 @@ public class Societa extends Casella {
         return rendita;
     }
 
+    public Giocatore getProprietario() {
+        return proprietario;
+    }
+
     public String toString(){
         return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
     }

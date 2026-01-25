@@ -27,6 +27,9 @@ public class StazioneTreno extends Casella {
         return valoreAcquisto;
     }
 
+    public Giocatore getProprietario() {
+        return proprietario;
+    }
     public String toString(){
         return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
     }

@@ -101,7 +101,29 @@ public class Partita{
             giocatore.isPrigione();
         }else if(casellaCorrente instanceof StazioneTreno){
             System.out.println(giocatore.getNome() + " è atterrato su una Stazione Treno.");
-            
+            if(((StazioneTreno) casellaCorrente).getProprietario()==null){
+                System.out.println("Questa stazione è disponibile per l'acquisto.");
+                System.out.println("Vuoi acquistare questa stazione? (s/n)");
+                String risposta = Leggi.unoString();
+                if(risposta.equalsIgnoreCase("s")){
+                    StazioneTreno stazione = (StazioneTreno) casellaCorrente;
+                    if(giocatore.acquistaStazione(stazione)){
+                        System.out.println(giocatore.getNome() + " ha acquistato " + stazione.getNome());
+                    }else{
+                        System.out.println(giocatore.getNome() + " non ha abbastanza denaro per acquistare " + stazione.getNome());
+                    }
+                }
+            }else{
+                Giocatore proprietario = ((StazioneTreno) casellaCorrente).getProprietario();
+                if(proprietario != giocatore){  
+                    int affitto = ((StazioneTreno) casellaCorrente).valoreRendita();
+                    System.out.println("Questa stazione è di proprietà di " + proprietario.getNome() + ". Deve pagare un affitto di " + affitto);
+                    if(!giocatore.pagaAffitto(proprietario, affitto)){
+                        System.out.println(giocatore.getNome() + " non ha abbastanza denaro per pagare l'affitto!");
+                        gestisciBancarotta(giocatore);
+                    }
+                }
+            }
         }else if(casellaCorrente instanceof Casella){
             System.out.println(giocatore.getNome() + " è atterrato su " + casellaCorrente.getNome());
         }
