@@ -90,6 +90,26 @@ class Giocatore{
         }
     }
 
+    public boolean acquistaStazione(StazioneTreno s){
+        if(denaro>=s.getPrezzoAcquisto()){
+            denaro-=s.getPrezzoAcquisto();
+            //logica per aggiungere stazione all'array terreni
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean acquistaSocieta(Societa s){
+        if(denaro>=s.getPrezzoAcquisto()){
+            denaro-=s.getPrezzoAcquisto();
+            //logica per aggiungere societa all'array terreni
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public String getPedina(){
         return pedina;
     }
