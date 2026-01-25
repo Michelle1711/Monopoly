@@ -21,7 +21,7 @@ public class Tabellone{
         tabellone[9] = new Terreno("Viale Vesuvio",tabellone[10],tabellone[8],10,120,Colore.AZZURRO,null);
 
         // prigione e blocco Rosa e Arancio
-        tabellone[10] = new Prigione("PRIGIONE!",tabellone[11],tabellone[9],11);
+        tabellone[10] = new Casella("Prigione",tabellone[11],tabellone[9],11);
         tabellone[11] = new Terreno("Via Accademia",tabellone[12],tabellone[10],12,140,Colore.ROSA,null);
         tabellone[12] = new Societa("Società Elettrica",tabellone[13],tabellone[11],13);
         tabellone[13] = new Terreno("Corso Ateneo",tabellone[14],tabellone[12],14,140,Colore.ROSA,null);
