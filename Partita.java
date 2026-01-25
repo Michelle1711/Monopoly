@@ -52,6 +52,18 @@ public class Partita{
             int numero = (int) (Math.random() * 6);
             System.out.println(imprevisti.pescaCarta(numero));
             int soldi=imprevisti.getSoldi(numero);
+            if(soldi<0){
+                System.out.println(giocatore.getNome() + " deve pagare " + (-soldi) + "€.");
+                if(!giocatore.pagaTassa(-soldi)){
+                    System.out.println(giocatore.getNome() + " non ha abbastanza denaro per pagare!");
+                    gestisciBancarotta(giocatore);
+                }
+                giocatore.pagaTassa(-soldi);
+                banca.riceviDenaro(-soldi);
+            }else if(soldi>0){
+                System.out.println(giocatore.getNome() + " riceve " + soldi + "€.");
+                giocatore.riceviAffitto(soldi);
+            }
 
         }else if(casellaCorrente instanceof Probabilita){
             System.out.println(giocatore.getNome() + " ha pescato una carta Probabilità.");
