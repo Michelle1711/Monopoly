@@ -156,7 +156,13 @@ public class Partita{
     }
 
     public void gestisciBancarotta(Giocatore giocatore){
-        // Logica per gestire la bancarotta di un giocatore
+        System.out.println(giocatore.getNome() + " è in bancarotta e viene eliminato dalla partita.");
+        for(int i=0;i<listaGiocatori.length;i++){
+            if(listaGiocatori[i]==giocatore){
+                listaGiocatori[i]=null;
+                break;
+            }
+        }
     }
 
     public void verificaVincitore(){
