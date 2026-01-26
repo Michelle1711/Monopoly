@@ -13,8 +13,11 @@ public class Partita{
 
     public void avviaPartita(){
         System.out.println("La partita è iniziata!");
-        eseguiCicloTurno();
-
+        do { 
+            eseguiCicloTurno();  
+            prossimoTurno();  
+        } while (verificaVincitore() == false);
+        vincitore();
     }
 
     public void prossimoTurno(){
@@ -191,7 +194,7 @@ public class Partita{
     }
 
     public void eseguiCicloTurno(){
-        while(verificaVincitore()==false){
+        while(verificaVincitore()==false && listaGiocatori[indiceTurno]!=null){
             Giocatore giocatoreCorrente = listaGiocatori[indiceTurno];
             if(giocatoreCorrente != null){
                 eseguiTurno(giocatoreCorrente);
