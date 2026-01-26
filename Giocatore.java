@@ -1,185 +1,197 @@
-class Giocatore{
+import java.util.ArrayList;
+
+public class Giocatore {
     private String nome;
     private String pedina;
     private int denaro;
-    private Terreno[] terreni;
-    private Casella casella;
-    private int nDoppio=0;
-    private int numCaselle=0;
-    //costruttore, toString
+    // Usiamo ArrayList perché la lista si allunga durante il gioco
+    private ArrayList<Casella> proprietaPossedute; 
+    private Casella casellaCorrente;
+    
+    private int nDoppio = 0;
+    private int turniFermo = 0;
+    private boolean inPrigione = false;
 
-    // bozza costruttore fatta da zancaner
-    public Giocatore(String nome, String pedina, int denaro, Terreno[] terreni, Casella casella) {
+    // Costruttore Semplificato: Inizializza lo stato di partenza standard
+    public Giocatore(String nome, String pedina, Casella partenza) {
         this.nome = nome;
         this.pedina = pedina;
-        this.denaro = denaro;
-        this.terreni = terreni;
-        this.casella = casella;
+        this.denaro = 1500; // Budget iniziale standard del Monopoly
+        this.proprietaPossedute = new ArrayList<>();
+        this.casellaCorrente = partenza;
     }
 
-    public String getNome(){
-        return nome;
-    }
+    // --- MOVIMENTO E POSIZIONE ---
 
-    public Casella getCasella(){
-        return casella;
-    }
-
-    public boolean isPrigione(){
-        if(casella instanceof Prigione){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public boolean giroCompleto(){
-        if (numCaselle==40){
-            numCaselle=0;
-            denaro+=200;
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public void incrementoDenaro(int soldi){
-        denaro+=soldi;
-    }
-
-    public boolean treDoppi(){
-        return nDoppio==3;
-    }
-
-    public void muovi(Dadi dado){
-        int valore=dado.getValoreDado();
-        if(dado.isDoppio()){
+    public void muovi(Dadi dado) {
+        int passi = dado.getValoreDado(); // Assumo Dadi abbia getValoreTotale()
+        
+        // Gestione regola dei 3 doppi consecutivi
+        if (dado.isDoppio()) {
             nDoppio++;
-        }else{
-            nDoppio=0;
+        } else {
+            nDoppio = 0;
         }
-        while(valore!=0){
-            Casella csuc=casella.getSuccessiva();
-            casella=csuc;
-            numCaselle++;
-            valore--;
+
+        if (nDoppio == 3) {
+            System.out.println("Tre doppi consecutivi! Vai in prigione.");
+            nDoppio = 0;
+            // La logica per spostarlo in prigione verrà gestita dalla classe Partita
+            // qui settiamo solo il flag per sicurezza
+            return; 
+        }
+
+        // Movimento passo passo per intercettare il passaggio dal VIA
+        for (int i = 0; i < passi; i++) {
+            casellaCorrente = casellaCorrente.getSuccessiva();
+            if (casellaCorrente.getNome().equalsIgnoreCase("VIA!")) {
+                System.out.println("Passaggio dal VIA! Ritiri 200€.");
+                denaro += 200;
+            }
         }
     }
 
-    public boolean pagaAffitto(Giocatore g,int affitto){
-        if(affitto<denaro){
-            denaro-=affitto;
-            g.riceviAffitto(affitto);
+    public void setCasella(Casella c) {
+        this.casellaCorrente = c;
+    }
+
+    public Casella getCasella() {
+        return casellaCorrente;
+    }
+
+    // --- GESTIONE PRIGIONE ---
+
+    public boolean isInPrigione() {
+        return inPrigione;
+    }
+
+    public void setInPrigione(boolean inPrigione) {
+        this.inPrigione = inPrigione;
+    }
+
+    public int getTurniFermo() {
+        return turniFermo;
+    }
+
+    public void setTurniFermo(int turniFermo) {
+        this.turniFermo = turniFermo;
+    }
+
+    public void decrementaTurniFermo() {
+        if (turniFermo > 0) turniFermo--;
+    }
+
+    // --- GESTIONE ECONOMICA ---
+
+    public int getBudget() {
+        return denaro;
+    }
+
+    public void riceviSoldi(int importo) {
+        this.denaro += importo;
+    }
+
+    public boolean pagaTassa(int importo) {
+        if (denaro >= importo) {
+            denaro -= importo;
             return true;
-        }else{
-            return false;
         }
+        return false; // Segnale di bancarotta
     }
 
-    public void riceviAffitto(int affitto){
-        denaro+=affitto;
-    }
-
-    public boolean acquistaTerreno(Terreno t){
-        if(denaro>=t.getValoreAcquisto()){
-            denaro-=t.getValoreAcquisto();
-            //logica per aggiungere terreno all'array terreni
+    public boolean pagaAffitto(Giocatore proprietario, int importo) {
+        if (denaro >= importo) {
+            denaro -= importo;
+            proprietario.riceviSoldi(importo);
             return true;
-        }else{
-            return false;
         }
+        // Se non ha abbastanza soldi, paga quello che ha e va in bancarotta
+        proprietario.riceviSoldi(denaro);
+        denaro = 0;
+        return false;
     }
 
-    public boolean acquistaStazione(StazioneTreno s){
-        if(denaro>=s.getPrezzoAcquisto()){
-            denaro-=s.getPrezzoAcquisto();
-            //logica per aggiungere stazione all'array terreni
+    // --- ACQUISTO PROPRIETÀ ---
+
+    // Metodo generico per acquistare qualsiasi proprietà (Terreno, Stazione, Società)
+    // Assumiamo che abbiano metodi comuni o gestiamo con instanceof
+    
+    public boolean acquistaTerreno(Terreno t) {
+        if (denaro >= t.getPrezzoAcquisto()) { // Assumo getPrezzoAcquisto() in Terreno
+            denaro -= t.getPrezzoAcquisto();
+            proprietaPossedute.add(t);
+            t.setProprietario(this); // FONDAMENTALE: Diciamo al terreno che è nostro
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
-    public boolean acquistaSocieta(Societa s){
-        if(denaro>=s.getPrezzoAcquisto()){
-            denaro-=s.getPrezzoAcquisto();
-            //logica per aggiungere societa all'array terreni
+    public boolean acquistaStazione(StazioneTreno s) {
+        if (denaro >= 200) { // Prezzo fisso o s.getPrezzo()
+            denaro -= 200;
+            proprietaPossedute.add(s);
+            s.setProprietario(this);
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
-    public String getPedina(){
-        return pedina;
-    }
-
-    public boolean tentaUscitaPrigione(Dadi dado){
-        if(dado.isDoppio()){
+    public boolean acquistaSocieta(Societa s) {
+        if (denaro >= 150) { // Prezzo fisso o s.getPrezzo()
+            denaro -= 150;
+            proprietaPossedute.add(s);
+            s.setProprietario(this);
             return true;
-        }else{
-            return false;
         }
+        return false;
+    }
+    
+    // Conta quante stazioni possiede (serve per calcolare la rendita della stazione)
+    public int getNumeroStazioni() {
+        int count = 0;
+        for (Casella c : proprietaPossedute) {
+            if (c instanceof StazioneTreno) count++;
+        }
+        return count;
     }
 
-    public boolean setCompleto(){
-        int proprietaM=0;
-        int proprietaA=0;
-        int proprietaRosa=0;
-        int proprietaRosso=0;
-        int proprietaAR=0;
-        int proprietaG=0;
-        int proprietaV=0;
-        int proprietaB=0;
-        for(int i=0;i<terreni.length;i++){
-            if(terreni[i]!=null){
-                switch(terreni[i].getColore()){
-                    case MARRONE:
-                        proprietaM++;
-                        break;
-                    case AZZURRO:
-                        proprietaA++;
-                        break;
-                    case ROSA:
-                        proprietaRosa++;
-                        break;
-                    case ARANCIONE:
-                        proprietaAR++;
-                        break;
-                    case GIALLO:
-                        proprietaG++;
-                        break;
-                    case VERDE:
-                        proprietaV++;
-                        break;
-                    case BLU:
-                        proprietaB++;
-                        break;
-                    case ROSSO:
-                        proprietaRosso++;
-                        break;
-                    default:
-                        break;
+    // Conta quante società possiede
+    public int getNumeroSocieta() {
+        int count = 0;
+        for (Casella c : proprietaPossedute) {
+            if (c instanceof Societa) count++;
+        }
+        return count;
+    }
+
+    // --- LOGICA SET COMPLETI ---
+
+    public boolean haSetCompleto(Colore colore) {
+        int contatore = 0;
+        for (Casella c : proprietaPossedute) {
+            if (c instanceof Terreno) {
+                if (((Terreno) c).getColore() == colore) {
+                    contatore++;
                 }
             }
         }
-        return (proprietaM==2 || proprietaA==3 || proprietaRosso==3 || proprietaRosa==3 || proprietaAR==3 || proprietaG==3 || proprietaV==3 || proprietaB==2);
-    }
-    
-    public boolean  pagaTassa(int tassa){
-        if(tassa<denaro){
-            denaro-=tassa;
-            return true;
-        }else{
-            return false;
+        
+        // Logica standard Monopoly
+        if (colore == Colore.MARRONE || colore == Colore.BLU) {
+            return contatore == 2;
+        } else {
+            return contatore == 3;
         }
     }
 
-    public void ipoteca(){
+    // --- ALTRO ---
 
+    public String getNome() {
+        return nome;
     }
 
-    public String toString(){
-        return "Giocatore: " + pedina + ", Denaro: " + denaro + ", Casella: " + casella.getNome();
+    @Override
+    public String toString() {
+        return "Giocatore [" + nome + " (" + pedina + ") | Budget: " + denaro + "€ | Pos: " + casellaCorrente.getNome() + "]";
     }
 }

@@ -27,6 +27,11 @@ public class StazioneTreno extends Casella {
         return valoreAcquisto;
     }
 
+    public void setProprietario(Giocatore g) {
+        this.proprietario = g;
+        this.acquistato = true;
+    }
+
     public Giocatore getProprietario() {
         return proprietario;
     }

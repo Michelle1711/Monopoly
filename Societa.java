@@ -27,6 +27,11 @@ public class Societa extends Casella {
         return rendita;
     }
 
+    public void setProprietario(Giocatore g) {
+        this.proprietario = g;
+        this.acquistato = true;
+    }
+
     public Giocatore getProprietario() {
         return proprietario;
     }
