@@ -2,8 +2,10 @@ public class Partita {
     private Giocatore[] listaGiocatori;
     private Banca banca;
     private int indiceTurno;
+    private Tabellone tabellone_;
     private Casella[] tabellone; // Serve per accedere direttamente alla prigione
     private Dadi dadi; // I dadi è meglio crearli una volta sola
+    private int contatoreTurni; // Contatore per evitare loop infinito
 
     public Partita(Giocatore[] listaGiocatori, Banca banca, Casella[] tabellone) {
         this.listaGiocatori = listaGiocatori;
@@ -11,6 +13,7 @@ public class Partita {
         this.tabellone = tabellone;
         this.indiceTurno = 0;
         this.dadi = new Dadi(); // Istanziamo i dadi di Tommaso
+        this.contatoreTurni = 0;
     }
 
     public void avviaPartita() {
@@ -18,12 +21,14 @@ public class Partita {
         
         // Ciclo principale del gioco
         while (!verificaVincitore()) {
+            tabellone_.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con i giocatori
             Giocatore giocatoreCorrente = listaGiocatori[indiceTurno];
             
             // Se il giocatore non è stato eliminato (non è null), gioca
             if (giocatoreCorrente != null) {
+                contatoreTurni++;
                 System.out.println("\n--------------------------------");
-                System.out.println("Turno di: " + giocatoreCorrente.getNome() + " [Budget: " + giocatoreCorrente.getBudget() + "]");
+                System.out.println("Turno " + contatoreTurni + ": " + giocatoreCorrente.getNome() + " [Budget: " + giocatoreCorrente.getBudget() + "]");
                 eseguiTurno(giocatoreCorrente);
             }
             

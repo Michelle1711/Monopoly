@@ -113,4 +113,63 @@ public class Tabellone{
             System.out.println(); // Va a capo dopo ogni riga
         }
     }
+
+    // Metodo aggiornato che accetta la lista dei giocatori
+    public void stampaTabelloneGioco(Giocatore[] listaGiocatori) {
+        int lato = 11; 
+        String[][] griglia = new String[lato][lato];
+        
+        // 1. Pulizia griglia centrale
+        for (int i = 0; i < lato; i++) {
+            for (int j = 0; j < lato; j++) {
+                griglia[i][j] = "           "; // 11 spazi vuoti (cella più larga)
+            }
+        }
+
+        // 2. Riempimento perimetro
+        for (int i = 0; i < 40; i++) {
+            Casella casellaAttuale = tabellone[i];
+            
+            // A. Recupera il Colore (se presente) per l'estetica
+            String coloreStart = "";
+            String coloreReset = "\u001B[0m"; // Reset standard
+            if (casellaAttuale instanceof Terreno) {
+                coloreStart = ((Terreno) casellaAttuale).getColore().getCodice();
+            }
+
+            // B. Cerca quali giocatori sono su questa casella
+            StringBuilder pedine = new StringBuilder();
+            for (Giocatore g : listaGiocatori) {
+                // Controllo fondamentale: g non deve essere null (giocatori eliminati)
+                // e deve trovarsi sulla casella attuale (confronto per riferimento oggetto)
+                if (g != null && g.getCasella() == casellaAttuale) {
+                    pedine.append(g.getPedina()); // Aggiunge la pedina (es. "X", "O")
+                }
+            }
+
+            // C. Formatta la stringa: [NomeBreve  Pedine]
+            // %-4.4s = Prende i primi 4 caratteri del nome
+            // %-3s   = Spazio per le pedine (fino a 3 caratteri)
+            String nomeTroncato = String.format("%-4.4s", casellaAttuale.getNome());
+            String pedineStringa = String.format("%-3s", pedine.toString());
+            
+            // Costruiamo la cella finale: [Nome Pedine] colorata
+            String cella = coloreStart + "[" + nomeTroncato + "|" + pedineStringa + "]" + coloreReset;
+
+            // D. Mappatura sulla matrice (identica a prima)
+            if (i <= 10) griglia[10][10 - i] = cella;        // Basso
+            else if (i <= 20) griglia[20 - i][0] = cella;    // Sinistra
+            else if (i <= 30) griglia[0][i - 20] = cella;    // Alto
+            else griglia[i - 30][10] = cella;                // Destra
+        }
+
+        // 3. Stampa a video
+        System.out.println("\n--- TABELLONE (Legenda: [Nome|Pedine]) ---");
+        for (int i = 0; i < lato; i++) {
+            for (int j = 0; j < lato; j++) {
+                System.out.print(griglia[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }

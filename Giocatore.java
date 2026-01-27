@@ -190,6 +190,10 @@ public class Giocatore {
         return nome;
     }
 
+    public String getPedina() {
+        return pedina;
+    }
+
     @Override
     public String toString() {
         return "Giocatore [" + nome + " (" + pedina + ") | Budget: " + denaro + "€ | Pos: " + casellaCorrente.getNome() + "]";
