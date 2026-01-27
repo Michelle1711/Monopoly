@@ -19,11 +19,11 @@ public class Partita {
 
     public void avviaPartita() {
         System.out.println("--- MONOPOLY: La partita è iniziata! ---");
-        tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
+        
         
         // Ciclo principale del gioco
         while (!verificaVincitore()) {
-            
+            tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
             Giocatore giocatoreCorrente = listaGiocatori[indiceTurno];
             
             // Se il giocatore non è stato eliminato (non è null), gioca
