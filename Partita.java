@@ -11,6 +11,7 @@ public class Partita {
         this.listaGiocatori = listaGiocatori;
         this.banca = banca;
         this.tabellone = tabellone;
+        this.tabellone_ = new Tabellone();
         this.indiceTurno = 0;
         this.dadi = new Dadi(); // Istanziamo i dadi di Tommaso
         this.contatoreTurni = 0;
