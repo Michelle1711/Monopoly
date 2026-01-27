@@ -188,18 +188,49 @@ public class Partita {
             g.setCasella(tabelloneArray[10]); // Sposta fisicamente al transito
             g.setInPrigione(true);
             g.setTurniFermo(3);
+            tabellone.stampaTabelloneGioco(listaGiocatori);
         }else if(numero==5 && carta instanceof Probabilita){ // Vai al VIA
             System.out.println(g.getNome() + " va al VIA. Ritira 200.");
             g.setCasella(tabelloneArray[0]);
             g.riceviSoldi(200); // Ritira 200 per passaggio VIA
+            tabellone.stampaTabelloneGioco(listaGiocatori);
         } else if(numero==3 && carta instanceof Imprevisti){
             System.out.println(g.getNome() + " avanza di 3 caselle.");
             for(int i=0;i<3;i++){
                 g.setCasella(g.getCasella().getSuccessiva());
             }
+            Casella casellaCorrente = g.getCasella();
             System.out.println("Nuova posizione: " + g.getCasella().getNome());
-            // Gestione eventuale della nuova casella
-            eseguiTurno(g); // Attenzione: potrebbe causare loop se non gestito bene
+            tabellone.stampaTabelloneGioco(listaGiocatori); 
+            if (casellaCorrente instanceof Terreno) {
+                gestisciTerreno(g, (Terreno) casellaCorrente);
+            } 
+            else if (casellaCorrente instanceof StazioneTreno) {
+                gestisciStazione(g, (StazioneTreno) casellaCorrente);
+            }
+            else if (casellaCorrente instanceof Societa) {
+                gestisciSocieta(g, (Societa) casellaCorrente);
+            }
+            else if (casellaCorrente instanceof Tasse) {
+                gestisciTasse(g, (Tasse) casellaCorrente);
+            }
+            else if (casellaCorrente instanceof Imprevisti) {
+                gestisciImprevisti(g, (Imprevisti) casellaCorrente);
+            }
+            else if (casellaCorrente instanceof Probabilita) {
+                gestisciProbabilita(g, (Probabilita) casellaCorrente);
+            }
+            else if (casellaCorrente instanceof Prigione) {
+                // Se è la casella "Vai in prigione" (indice 30)
+                if (casellaCorrente.getNome().equalsIgnoreCase("VAI IN PRIGIONE!")) {
+                    System.out.println("ARRESTO! " + g.getNome() + " viene spedito in prigione.");
+                    g.setCasella(tabelloneArray[10]); // Sposta fisicamente al transito
+                    g.setInPrigione(true);
+                    g.setTurniFermo(3);
+                } else {
+                    System.out.println("Solo transito / Visita.");
+                }
+            }
         }
         
         if (soldi < 0) {
