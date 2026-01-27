@@ -183,6 +183,24 @@ public class Partita {
             descrizione=((Probabilita)carta).pescaCarta(numero);
             soldi = ((Probabilita)carta).getSoldi(numero);
         } 
+        if (numero==1 && carta instanceof Imprevisti) { // Vai in prigione
+            System.out.println("ARRESTO! " + g.getNome() + " viene spedito in prigione.");
+            g.setCasella(tabelloneArray[10]); // Sposta fisicamente al transito
+            g.setInPrigione(true);
+            g.setTurniFermo(3);
+        }else if(numero==5 && carta instanceof Probabilita){ // Vai al VIA
+            System.out.println(g.getNome() + " va al VIA. Ritira 200.");
+            g.setCasella(tabelloneArray[0]);
+            g.riceviSoldi(200); // Ritira 200 per passaggio VIA
+        } else if(numero==3 && carta instanceof Imprevisti){
+            System.out.println(g.getNome() + " avanza di 3 caselle.");
+            for(int i=0;i<3;i++){
+                g.setCasella(g.getCasella().getSuccessiva());
+            }
+            System.out.println("Nuova posizione: " + g.getCasella().getNome());
+            // Gestione eventuale della nuova casella
+            eseguiTurno(g); // Attenzione: potrebbe causare loop se non gestito bene
+        }
         
         if (soldi < 0) {
             System.out.println("Descrizione: " + descrizione);
