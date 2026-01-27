@@ -1,4 +1,4 @@
-public class StazioneTreno {
+public class StazioneTreno extends Casella {
 //commento per push
     private boolean acquistato;
     private int rendita;
@@ -6,7 +6,8 @@ public class StazioneTreno {
     private int valoreIpoteca;
     private Giocatore proprietario;
 
-    public StazioneTreno() {
+    public StazioneTreno(String nome, Casella successiva, Casella precedente, int numeroCasella) {
+        super(nome, successiva, precedente, numeroCasella);
         acquistato = false;
         rendita = 25;
         valoreAcquisto = 200;
@@ -24,6 +25,18 @@ public class StazioneTreno {
 
     public int getPrezzoAcquisto() {
         return valoreAcquisto;
+    }
+
+    public void setProprietario(Giocatore g) {
+        this.proprietario = g;
+        this.acquistato = true;
+    }
+
+    public Giocatore getProprietario() {
+        return proprietario;
+    }
+    public String toString(){
+        return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
     }
 }
 

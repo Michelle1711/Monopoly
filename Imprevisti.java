@@ -1,9 +1,10 @@
-public class Imprevisti {
+public class Imprevisti extends Casella {
 
     private String[] mazzoImprevisti;
     private int[] soldiImprevisti;
 
-    public Imprevisti() {
+    public Imprevisti(String nome, Casella successiva, Casella precedente, int numeroCasella) {
+        super(nome, successiva, precedente, numeroCasella);
         mazzoImprevisti = new String[] {
                 "Paga una multa di 50",
                 "Vai in prigione",
@@ -37,6 +38,6 @@ public class Imprevisti {
 
     @Override
     public String toString() {
-        return "Mazzo Imprevisti";
+        return super.toString();
     }
 }

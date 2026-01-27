@@ -26,6 +26,11 @@ public class Terreno extends Casella{
         return ipotecato;
     }
 
+    public void setProprietario(Giocatore g){
+        this.proprietario = g;
+        this.ipotecato = false;
+    }
+
     public Giocatore getProprietario(){
         return proprietario;
     }
@@ -236,7 +241,7 @@ public class Terreno extends Casella{
         return costoCasa;
     }
 
-
-
-
+    public String toString(){
+        return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
+    }
 }

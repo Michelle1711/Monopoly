@@ -1,4 +1,4 @@
-public class Societa {
+public class Societa extends Casella {
 //commento per push
     private boolean acquistato;
     private int rendita;
@@ -6,7 +6,8 @@ public class Societa {
     private int valoreIpoteca;
     private Giocatore proprietario;
 
-    public Societa() {
+    public Societa(String nome, Casella successiva, Casella precedente, int numeroCasella) {
+        super(nome, successiva, precedente, numeroCasella);
         acquistato = false;
         rendita = 50;
         valoreAcquisto = 150;
@@ -24,5 +25,18 @@ public class Societa {
 
     public int affitto() {
         return rendita;
+    }
+
+    public void setProprietario(Giocatore g) {
+        this.proprietario = g;
+        this.acquistato = true;
+    }
+
+    public Giocatore getProprietario() {
+        return proprietario;
+    }
+
+    public String toString(){
+        return  super.toString()+ "valoreAcquisto=" + valoreAcquisto;
     }
 }

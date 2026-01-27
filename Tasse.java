@@ -14,5 +14,8 @@ public class Tasse extends Casella{
         this.valore = valore;
     }
 
-
+    public String toString(){
+        return  super.toString() +
+                "valore=" + valore;
+    }
 }

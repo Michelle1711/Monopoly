@@ -7,8 +7,6 @@ public class Prigione extends Casella {
     }    
 
     public String toString(){
-        return "Prigione{" +
-                "turni=" + turni +
-                "} " + super.toString();
+        return  super.toString();
     }
 }
