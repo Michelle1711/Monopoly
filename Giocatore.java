@@ -47,7 +47,7 @@ public class Giocatore {
         for (int i = 0; i < passi; i++) {
             casellaCorrente = casellaCorrente.getSuccessiva();
             if (casellaCorrente.getNome().equalsIgnoreCase("VIA!")) {
-                System.out.println("Passaggio dal VIA! Ritiri 200€.");
+                System.out.println("Passaggio dal VIA! Ritiri 200.");
                 denaro += 200;
             }
         }

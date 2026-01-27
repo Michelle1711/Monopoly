@@ -19,11 +19,11 @@ public class Partita {
 
     public void avviaPartita() {
         System.out.println("--- MONOPOLY: La partita è iniziata! ---");
-        
+        tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
         
         // Ciclo principale del gioco
         while (!verificaVincitore()) {
-            tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
+            
             Giocatore giocatoreCorrente = listaGiocatori[indiceTurno];
             
             // Se il giocatore non è stato eliminato (non è null), gioca
@@ -175,13 +175,21 @@ public class Partita {
     private void gestisciCarta(Giocatore g, Casella carta) {
         int numero = (int) (Math.random() * 6); 
         int soldi = 0;
-        if(carta instanceof Imprevisti) soldi = ((Imprevisti)carta).getSoldi(numero);
-        else soldi = ((Probabilita)carta).getSoldi(numero);
+        String descrizione="";
+        if(carta instanceof Imprevisti){
+            descrizione=((Imprevisti)carta).pescaCarta(numero);
+            soldi = ((Imprevisti)carta).getSoldi(numero);
+        } else{
+            descrizione=((Probabilita)carta).pescaCarta(numero);
+            soldi = ((Probabilita)carta).getSoldi(numero);
+        } 
         
         if (soldi < 0) {
+            System.out.println("Descrizione: " + descrizione);
             System.out.println("Malus: devi pagare " + (-soldi));
             if (!g.pagaTassa(-soldi)) gestisciBancarotta(g);
         } else {
+            System.out.println("Descrizione: " + descrizione);
             System.out.println("Bonus: ricevi " + soldi);
             g.riceviSoldi(soldi); // Metodo ipotetico in Giocatore
         }
