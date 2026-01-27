@@ -21,9 +21,9 @@ public class Monopoly{
                 sceltaPedina=Leggi.unInt();
             }while(sceltaPedina<1 || sceltaPedina>6);
 
-            giocatori[i]=new Giocatore(nome, String.valueOf(sceltaPedina), 1500, new Terreno[40], tabellone.getCasella(0));
+            giocatori[i]=new Giocatore(nome, String.valueOf(sceltaPedina), tabellone.getCasella(0));
         }
-        Partita partita=new Partita(giocatori,new Banca(),tabellone.getTabellone());
+        Partita partita=new Partita(giocatori,new Banca(tabellone.getTabellone()),tabellone.getTabellone());
         partita.avviaPartita();
     }
 }
