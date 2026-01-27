@@ -82,39 +82,60 @@ public class Tabellone{
     }
 
     public void stampaTabellone() {
-        int lato = 11; // Il tabellone ha 11 caselle per lato (angoli inclusi)
+        int lato = 11;
         String[][] griglia = new String[lato][lato];
+        
+        // Codice per resettare il colore (torna bianco/standard)
+        String RESET = "\u001B[0m"; 
 
         // Inizializza tutto il centro come vuoto
         for (int i = 0; i < lato; i++) {
             for (int j = 0; j < lato; j++) {
-                griglia[i][j] = "      "; // 6 spazi per mantenere l'allineamento
+                griglia[i][j] = "      "; // 6 spazi vuoti
             }
         }
 
-        // Riempie il perimetro usando l'array tabellone[40]
+        // Riempie il perimetro
         for (int i = 0; i < 40; i++) {
-            // Prendiamo le prime 4 lettere del nome per non sformare il quadrato
             String nome = tabellone[i].getNome();
-            String cella = "[" + String.format("%-4.4s", nome) + "]";
+            String codiceColore = ""; // Di base nessun colore
 
-            if (i <= 10) griglia[10][10 - i] = cella;        // Basso (da destra a sinistra)
-            else if (i <= 20) griglia[20 - i][0] = cella;    // Sinistra (dal basso in alto)
-            else if (i <= 30) griglia[0][i - 20] = cella;    // Alto (da sinistra a destra)
-            else griglia[i - 30][10] = cella;                // Destra (dall'alto in basso)
+            // Se la casella è un Terreno, recuperiamo il suo colore
+            if (tabellone[i] instanceof Terreno) {
+                Colore col = ((Terreno) tabellone[i]).getColore();
+                if (col != null) {
+                    codiceColore = col.getCodice(); // Usa il metodo getter dell'Enum
+                }
+            } 
+            // Opzionale: Colora di ROSSO la prigione per evidenziarla
+            else if (tabellone[i] instanceof Prigione) {
+                codiceColore = "\u001B[31m"; 
+            }
+
+            // Formattiamo il nome a 4 caratteri
+            String nomeFormattato = String.format("%-4.4s", nome);
+
+            // Costruiamo la cella: COLORE + [NOME] + RESET
+            // Nota: Il reset è fondamentale, altrimenti colora anche le caselle successive!
+            String cella = codiceColore + "[" + nomeFormattato + "]" + RESET;
+
+            // Logica di posizionamento nella matrice (invariata)
+            if (i <= 10) griglia[10][10 - i] = cella;        // Basso
+            else if (i <= 20) griglia[20 - i][0] = cella;    // Sinistra
+            else if (i <= 30) griglia[0][i - 20] = cella;    // Alto
+            else griglia[i - 30][10] = cella;                // Destra
         }
 
-        // Stampa finale a video
+        // Stampa finale
         System.out.println("\n--- TABELLONE DI GIOCO ---");
         for (int i = 0; i < lato; i++) {
             for (int j = 0; j < lato; j++) {
                 System.out.print(griglia[i][j] + " ");
             }
-            System.out.println(); // Va a capo dopo ogni riga
+            System.out.println();
         }
     }
 
-    // Metodo aggiornato che accetta la lista dei giocatori
     public void stampaTabelloneGioco(Giocatore[] listaGiocatori) {
         int lato = 11; 
         String[][] griglia = new String[lato][lato];

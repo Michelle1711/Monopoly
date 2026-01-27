@@ -26,6 +26,8 @@ public class Giocatore {
     public void muovi(Dadi dado) {
         int passi = dado.getValoreDado(); // Assumo Dadi abbia getValoreTotale()
         
+        System.out.println(nome + " lancia i dadi e ottiene: "  + passi);
+
         // Gestione regola dei 3 doppi consecutivi
         if (dado.isDoppio()) {
             nDoppio++;

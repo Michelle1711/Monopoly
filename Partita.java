@@ -13,16 +13,17 @@ public class Partita {
         this.tabellone = tabellone;
         this.tabelloneArray = tabellone.getTabellone();
         this.indiceTurno = 0;
-        this.dadi = new Dadi(); // Istanziamo i dadi di Tommaso
+        this.dadi = new Dadi(); 
         this.contatoreTurni = 0;
     }
 
     public void avviaPartita() {
         System.out.println("--- MONOPOLY: La partita è iniziata! ---");
+        tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
         
         // Ciclo principale del gioco
         while (!verificaVincitore()) {
-            tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
+            
             Giocatore giocatoreCorrente = listaGiocatori[indiceTurno];
             
             // Se il giocatore non è stato eliminato (non è null), gioca
@@ -49,7 +50,6 @@ public class Partita {
     }
 
     public void eseguiTurno(Giocatore giocatore) {
-        // Controllo Prigione (Logica Michelle)
         if (giocatore.isInPrigione()) {
             if (giocatore.getTurniFermo() > 0) {
                 System.out.println(giocatore.getNome() + " è bloccato in prigione per altri " + giocatore.getTurniFermo() + " turni.");
@@ -61,8 +61,8 @@ public class Partita {
             }
         }
 
-        // Movimento (Dadi Tommaso + Lista Tabellone Michelle)
         giocatore.muovi(dadi); 
+        tabellone.stampaTabelloneGioco(listaGiocatori); // Aggiorna la stampa dopo il movimento
         Casella casellaCorrente = giocatore.getCasella();
         System.out.println("Posizione: " + casellaCorrente.getNome());
 
@@ -121,7 +121,7 @@ public class Partita {
         if (s.getProprietario() == null) {
             proponiAcquisto(g, s);
         } else if (s.getProprietario() != g) {
-            pagaAffitto(g, s.getProprietario(), s.affitto()); // Nota: Assumo Società abbia metodo affitto()
+            pagaAffitto(g, s.getProprietario(), s.affitto()); 
         }
     }
 
@@ -173,7 +173,7 @@ public class Partita {
     
     // Metodo generico per carte (da adattare se le classi sono molto diverse)
     private void gestisciCarta(Giocatore g, Casella carta) {
-        int numero = (int) (Math.random() * 6); // O logica mazzo Tommaso
+        int numero = (int) (Math.random() * 6); 
         int soldi = 0;
         if(carta instanceof Imprevisti) soldi = ((Imprevisti)carta).getSoldi(numero);
         else soldi = ((Probabilita)carta).getSoldi(numero);
