@@ -2,16 +2,16 @@ public class Partita {
     private Giocatore[] listaGiocatori;
     private Banca banca;
     private int indiceTurno;
-    private Tabellone tabellone_;
-    private Casella[] tabellone; // Serve per accedere direttamente alla prigione
+    private Tabellone tabellone; // Oggetto Tabellone per la stampa con pedine
+    private Casella[] tabelloneArray; // Array di caselle per accedere direttamente
     private Dadi dadi; // I dadi è meglio crearli una volta sola
     private int contatoreTurni; // Contatore per evitare loop infinito
 
-    public Partita(Giocatore[] listaGiocatori, Banca banca, Casella[] tabellone) {
+    public Partita(Giocatore[] listaGiocatori, Banca banca, Tabellone tabellone) {
         this.listaGiocatori = listaGiocatori;
         this.banca = banca;
         this.tabellone = tabellone;
-        this.tabellone_ = new Tabellone();
+        this.tabelloneArray = tabellone.getTabellone();
         this.indiceTurno = 0;
         this.dadi = new Dadi(); // Istanziamo i dadi di Tommaso
         this.contatoreTurni = 0;
@@ -22,7 +22,7 @@ public class Partita {
         
         // Ciclo principale del gioco
         while (!verificaVincitore()) {
-            tabellone_.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con i giocatori
+            tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
             Giocatore giocatoreCorrente = listaGiocatori[indiceTurno];
             
             // Se il giocatore non è stato eliminato (non è null), gioca
@@ -90,7 +90,7 @@ public class Partita {
             // Se è la casella "Vai in prigione" (indice 30)
             if (casellaCorrente.getNome().equalsIgnoreCase("VAI IN PRIGIONE!")) {
                 System.out.println("ARRESTO! " + giocatore.getNome() + " viene spedito in prigione.");
-                giocatore.setCasella(tabellone[10]); // Sposta fisicamente al transito
+                giocatore.setCasella(tabelloneArray[10]); // Sposta fisicamente al transito
                 giocatore.setInPrigione(true);
                 giocatore.setTurniFermo(3);
             } else {
