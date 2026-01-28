@@ -102,10 +102,56 @@ public class Partita {
     // --- METODI DI SUPPORTO PER PULIRE IL CODICE ---
 
     private void gestisciTerreno(Giocatore g, Terreno t) {
+        
+        // CASO 1: Il terreno non ha proprietario -> PROPOSTA ACQUISTO
         if (t.getProprietario() == null) {
             proponiAcquisto(g, t);
-        } else if (t.getProprietario() != g) {
-            pagaAffitto(g, t.getProprietario(), t.valoreRendita());
+        } 
+        
+        // CASO 2: Il terreno è di un altro giocatore -> PAGA AFFITTO
+        else if (t.getProprietario() != g) {
+            int affitto = t.valoreRendita();
+
+            // REGOLA MONOPOLY: Se il proprietario ha il set completo ma 0 case, l'affitto base raddoppia
+            if (t.getnCase() == 0 && t.getProprietario().haSetCompleto(t.getColore())) {
+                System.out.println("Il proprietario possiede tutto il set " + t.getColore() + "! L'affitto è raddoppiato.");
+                affitto *= 2;
+            }
+
+            pagaAffitto(g, t.getProprietario(), affitto);
+        } 
+        
+        // CASO 3: Il terreno è del giocatore corrente -> COSTRUZIONE
+        else {
+            System.out.println("Sei sulla tua proprietà: " + t.getNome());
+            
+            // Verifica: Ha il set completo? E non ha già un albergo (5 case)?
+            if (g.haSetCompleto(t.getColore())) {
+                
+                if (t.getnCase() < 5) {
+                    int costoCasa = t.getCostoCasa();
+                    System.out.println("Possiedi tutti i terreni " + t.getColore() + "!");
+                    System.out.println("Attualmente hai " + t.getnCase() + " case/alberghi.");
+                    System.out.println("Vuoi costruire per " + costoCasa + "€? (s/n)");
+                    
+                    String risposta = Leggi.unoString(); // Usa il tuo metodo di input
+                    
+                    if (risposta.equalsIgnoreCase("s")) {
+                        // Verifica se ha i soldi
+                        if (g.getBudget() >= costoCasa) {
+                            g.pagaTassa(costoCasa); // Scala i soldi dal giocatore
+                            t.costruisciCasa(); // Aumenta il numero di case nel terreno
+                            System.out.println("Costruzione completata! Ora l'affitto qui sarà: " + t.valoreRendita());
+                        } else {
+                            System.out.println("Non hai abbastanza fondi per costruire.");
+                        }
+                    }
+                } else {
+                    System.out.println("Hai già un ALBERGO (massimo livello di costruzione).");
+                }
+            } else {
+                System.out.println("Non puoi costruire: ti mancano altri terreni del colore " + t.getColore() + ".");
+            }
         }
     }
 
