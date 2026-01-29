@@ -171,7 +171,7 @@ public class Partita {
             // Regola standard Monopoly: 1 staz=25, 2 staz=50, 3 staz=100, 4 staz=200.
             // Formula matematica: 25 * 2^(n-1)
             int affittoBase = 25; 
-            int affittoDaPagare = affittoBase * (int) Math.pow(2, numeroStazioniPossedute - 1);
+            int affittoDaPagare = affittoBase*proprietario.getNumeroStazioni();
 
             /* NOTA: Se invece preferisci una moltiplicazione semplice (es. 2 stazioni = 50, 3 = 75),
                usa questa riga al posto di quella sopra:
@@ -187,10 +187,28 @@ public class Partita {
     }
     
     private void gestisciSocieta(Giocatore g, Societa s) {
+        // CASO 1: Nessun proprietario -> Proponi acquisto
         if (s.getProprietario() == null) {
             proponiAcquisto(g, s);
-        } else if (s.getProprietario() != g) {
-            pagaAffitto(g, s.getProprietario(), s.affitto()); 
+        } 
+        // CASO 2: Di proprietà altrui -> Paga affitto
+        else if (s.getProprietario() != g) {
+            Giocatore proprietario = s.getProprietario();
+            
+            // Recuperiamo il prezzo base (l'affitto standard della società)
+            int affittoDaPagare = s.affitto(); 
+            
+            // Contiamo quante società possiede il proprietario
+            // (Nota: devi aver aggiunto getNumeroSocieta() in Giocatore, vedi sotto)
+            int numeroSocieta = proprietario.getNumeroSocieta();
+
+            // SE il proprietario ha tutte e due le società (quindi 2), moltiplica per 4
+            if (numeroSocieta >= 2) {
+                System.out.println("Il proprietario possiede entrambe le società! Il prezzo è moltiplicato per 4.");
+                affittoDaPagare = affittoDaPagare * 4;
+            }
+
+            pagaAffitto(g, proprietario, affittoDaPagare); 
         }
     }
 
