@@ -156,10 +156,33 @@ public class Partita {
     }
 
     private void gestisciStazione(Giocatore g, StazioneTreno s) {
+        // CASO 1: Nessun proprietario -> Proponi acquisto
         if (s.getProprietario() == null) {
             proponiAcquisto(g, s);
-        } else if (s.getProprietario() != g) {
-            pagaAffitto(g, s.getProprietario(), s.valoreRendita());
+        } 
+        // CASO 2: Di proprietà altrui -> Paga affitto calcolato
+        else if (s.getProprietario() != g) {
+            Giocatore proprietario = s.getProprietario();
+            
+            // 1. Recuperiamo quante stazioni ha il proprietario
+            int numeroStazioniPossedute = proprietario.getNumeroStazioni();
+            
+            // 2. Calcolo Affitto
+            // Regola standard Monopoly: 1 staz=25, 2 staz=50, 3 staz=100, 4 staz=200.
+            // Formula matematica: 25 * 2^(n-1)
+            int affittoBase = 25; 
+            int affittoDaPagare = affittoBase * (int) Math.pow(2, numeroStazioniPossedute - 1);
+
+            /* NOTA: Se invece preferisci una moltiplicazione semplice (es. 2 stazioni = 50, 3 = 75),
+               usa questa riga al posto di quella sopra:
+               
+               int affittoDaPagare = affittoBase * numeroStazioniPossedute;
+            */
+
+            System.out.println("Il proprietario " + proprietario.getNome() + " possiede " + numeroStazioniPossedute + " stazioni.");
+            
+            // 3. Pagamento
+            pagaAffitto(g, proprietario, affittoDaPagare);
         }
     }
     
