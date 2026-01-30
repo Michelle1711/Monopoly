@@ -12,7 +12,6 @@ public class Giocatore {
     private int turniFermo = 0;
     private boolean inPrigione = false;
 
-    // Costruttore Semplificato: Inizializza lo stato di partenza standard
     public Giocatore(String nome, String pedina, Casella partenza) {
         this.nome = nome;
         this.pedina = pedina;
@@ -24,7 +23,7 @@ public class Giocatore {
     // --- MOVIMENTO E POSIZIONE ---
 
     public void muovi(Dadi dado) {
-        int passi = dado.getValoreDado(); // Assumo Dadi abbia getValoreTotale()
+        int passi = dado.getValoreDado(); 
         
         System.out.println(nome + " lancia i dadi e ottiene: "  + passi);
 
@@ -115,21 +114,19 @@ public class Giocatore {
 
     // --- ACQUISTO PROPRIETÀ ---
 
-    // Metodo generico per acquistare qualsiasi proprietà (Terreno, Stazione, Società)
-    // Assumiamo che abbiano metodi comuni o gestiamo con instanceof
     
     public boolean acquistaTerreno(Terreno t) {
-        if (denaro >= t.getPrezzoAcquisto()) { // Assumo getPrezzoAcquisto() in Terreno
+        if (denaro >= t.getPrezzoAcquisto()) {
             denaro -= t.getPrezzoAcquisto();
             proprietaPossedute.add(t);
-            t.setProprietario(this); // FONDAMENTALE: Diciamo al terreno che è nostro
+            t.setProprietario(this); 
             return true;
         }
         return false;
     }
 
     public boolean acquistaStazione(StazioneTreno s) {
-        if (denaro >= 200) { // Prezzo fisso o s.getPrezzo()
+        if (denaro >= 200) { 
             denaro -= 200;
             proprietaPossedute.add(s);
             s.setProprietario(this);
@@ -139,7 +136,7 @@ public class Giocatore {
     }
 
     public boolean acquistaSocieta(Societa s) {
-        if (denaro >= 150) { // Prezzo fisso o s.getPrezzo()
+        if (denaro >= 150) { 
             denaro -= 150;
             proprietaPossedute.add(s);
             s.setProprietario(this);
