@@ -6,6 +6,7 @@ public class Dadi {
     private int valore2;
     private int valore;
     private int valoreTruccato;
+    private boolean valoreImpostato=false;
 
     public Dadi() {
         valore1 = 0;
@@ -21,6 +22,7 @@ public class Dadi {
             valore1 = valore / 2;
             valore2 = valore - valore1;
             valoreTruccato = 0;
+            valoreImpostato = true;
         }else{
             Random r = new Random();
             valore1 = r.nextInt(6) + 1;
@@ -34,6 +36,10 @@ public class Dadi {
     }
 
     public boolean isDoppio() {
+        if(valoreImpostato) {
+            valoreImpostato = false;
+            return false; 
+        }
         return valore1 == valore2;
     }
     
