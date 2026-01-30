@@ -52,7 +52,6 @@ public class Partita {
 
     private void chiediModalitaCheat() {
         System.out.println("Vuoi attivare la modalità CHEAT (scegli tu i dadi)? (s/n)");
-        // Uso Leggi.unoString() ipotizzando la tua classe, altrimenti usa Scanner
         String risposta = Leggi.unoString(); 
         
         if (risposta.equalsIgnoreCase("s")) {
@@ -86,7 +85,7 @@ public class Partita {
             int valoreForzato;
             do{
                 System.out.println("[CHEAT] Inserisci il valore dei dadi (2-12) per " + giocatore.getNome() + ": ");
-                valoreForzato = Leggi.unInt(); // Legge l'intero da tastiera
+                valoreForzato = Leggi.unInt(); 
             } while (valoreForzato < 2 || valoreForzato > 12);
             // Imposta il valore "truccato" nell'oggetto dadi
             dadi.setValoreTruccato(valoreForzato);
@@ -167,13 +166,14 @@ public class Partita {
             }
 
             pagaAffitto(g, t.getProprietario(), affitto);
+            
         } 
         
         // CASO 3: Il terreno è del giocatore corrente -> COSTRUZIONE
         else {
             System.out.println("Sei sulla tua proprietà: " + t.getNome());
             
-            // Verifica: Ha il set completo? E non ha già un albergo (5 case)?
+            // Verifica: Ha il set completo?
             if (g.haSetCompleto(t.getColore())) {
                 
                 if (t.getnCase() < 5) {
@@ -221,12 +221,6 @@ public class Partita {
             int affittoBase = 25; 
             int affittoDaPagare = affittoBase*proprietario.getNumeroStazioni();
 
-            /* NOTA: Se invece preferisci una moltiplicazione semplice (es. 2 stazioni = 50, 3 = 75),
-               usa questa riga al posto di quella sopra:
-               
-               int affittoDaPagare = affittoBase * numeroStazioniPossedute;
-            */
-
             System.out.println("Il proprietario " + proprietario.getNome() + " possiede " + numeroStazioniPossedute + " stazioni.");
             
             // 3. Pagamento
@@ -247,7 +241,6 @@ public class Partita {
             int affittoDaPagare = s.affitto(); 
             
             // Contiamo quante società possiede il proprietario
-            // (Nota: devi aver aggiunto getNumeroSocieta() in Giocatore, vedi sotto)
             int numeroSocieta = proprietario.getNumeroSocieta();
 
             // SE il proprietario ha tutte e due le società (quindi 2), moltiplica per 4
@@ -262,7 +255,6 @@ public class Partita {
 
     private void proponiAcquisto(Giocatore g, Casella c) {
         // Qui assumiamo che Casella abbia getCosto(), altrimenti fai cast specifico
-        // Per semplicità uso Terreno come esempio generico, ma andrebbe adattato
         int costo = 0;
         if(c instanceof Terreno) costo = ((Terreno)c).getPrezzoAcquisto(); // Assumo metodo getCostoAcquisto
         else if(c instanceof StazioneTreno) costo = 200; // Prezzo fisso stazioni
@@ -272,7 +264,6 @@ public class Partita {
         String risposta = Leggi.unoString(); // Classe Leggi ipotetica
         
         if (risposta.equalsIgnoreCase("s")) {
-            // Nota: I metodi acquistaTerreno/Stazione devono gestire la detrazione soldi
             boolean esito = false;
             if(c instanceof Terreno) esito = g.acquistaTerreno((Terreno)c);
             else if(c instanceof StazioneTreno) esito = g.acquistaStazione((StazioneTreno)c);
