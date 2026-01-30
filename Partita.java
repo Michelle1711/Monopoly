@@ -6,6 +6,7 @@ public class Partita {
     private Casella[] tabelloneArray; // Array di caselle per accedere direttamente
     private Dadi dadi; // I dadi è meglio crearli una volta sola
     private int contatoreTurni; // Contatore per evitare loop infinito
+    private boolean modalitaCheat;
 
     public Partita(Giocatore[] listaGiocatori, Banca banca, Tabellone tabellone) {
         this.listaGiocatori = listaGiocatori;
@@ -15,10 +16,15 @@ public class Partita {
         this.indiceTurno = 0;
         this.dadi = new Dadi(); 
         this.contatoreTurni = 0;
+        this.modalitaCheat = false;
     }
 
     public void avviaPartita() {
+        chiediModalitaCheat();
+
         System.out.println("--- MONOPOLY: La partita è iniziata! ---");
+        if (modalitaCheat) System.out.println("[!] MODALITÀ CHEAT ATTIVA [!]");
+
         tabellone.stampaTabelloneGioco(listaGiocatori); // Stampa il tabellone con le pedine
         
         // Ciclo principale del gioco
@@ -41,6 +47,19 @@ public class Partita {
         annunciaVincitore();
     }
 
+    private void chiediModalitaCheat() {
+        System.out.println("Vuoi attivare la modalità CHEAT (scegli tu i dadi)? (s/n)");
+        // Uso Leggi.unoString() ipotizzando la tua classe, altrimenti usa Scanner
+        String risposta = Leggi.unoString(); 
+        
+        if (risposta.equalsIgnoreCase("s")) {
+            this.modalitaCheat = true;
+            System.out.println(">> Trucchi attivati! Ti verrà chiesto il valore dei dadi ogni turno.");
+        } else {
+            this.modalitaCheat = false;
+        }
+    }
+
     // Metodo helper per gestire i turni saltando i null
     private void passaAlProssimoGiocatoreValido() {
         do {
@@ -60,6 +79,14 @@ public class Partita {
                 giocatore.setInPrigione(false);
             }
         }
+        if (modalitaCheat) {
+            System.out.println("[CHEAT] Inserisci il valore dei dadi (2-12) per " + giocatore.getNome() + ": ");
+            int valoreForzato = Leggi.unInt(); // Legge l'intero da tastiera
+            
+            // Imposta il valore "truccato" nell'oggetto dadi
+            dadi.setValoreTruccato(valoreForzato);
+        }
+        dadi.lancia();
 
         giocatore.muovi(dadi); 
         tabellone.stampaTabelloneGioco(listaGiocatori); // Aggiorna la stampa dopo il movimento
