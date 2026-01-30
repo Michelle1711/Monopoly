@@ -92,9 +92,15 @@ public class Partita {
             dadi.setValoreTruccato(valoreForzato);
         }
         dadi.lancia();
-
+        boolean haFattoDoppio = dadi.isDoppio();
         giocatore.muovi(dadi); 
-        if (giocatore.isInPrigione()) {
+        if(haFattoDoppio){
+            System.out.println(giocatore.getNome() + " ha fatto DOPPIO!");
+            dadi.lancia();
+            giocatore.muovi(dadi);
+        }
+        
+        if (giocatore.isInPrigione() && dadi.getValoreImpostato()==false) {
             if (giocatore.getTurniFermo() > 0) {
                 System.out.println(giocatore.getNome() + " è bloccato in prigione per altri " + giocatore.getTurniFermo() + " turni.");
                 giocatore.decrementaTurniFermo();

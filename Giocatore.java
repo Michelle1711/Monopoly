@@ -35,7 +35,7 @@ public class Giocatore {
             nDoppio = 0;
         }
 
-        if (nDoppio == 3) {
+        if (nDoppio == 3 && dado.getValoreImpostato()==false) {
             System.out.println("Tre doppi consecutivi! Vai in prigione.");
             nDoppio = 0;
             inPrigione = true;

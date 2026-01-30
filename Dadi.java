@@ -6,13 +6,14 @@ public class Dadi {
     private int valore2;
     private int valore;
     private int valoreTruccato;
-    private boolean valoreImpostato=false;
+    private boolean valoreImpostato;
 
     public Dadi() {
         valore1 = 0;
         valore2 = 0;
         valore = 0;
         valoreTruccato = 0;
+        valoreImpostato=false;
     }
 
     // Lancia i dadi
@@ -35,9 +36,12 @@ public class Dadi {
         return valore;
     }
 
+    public boolean getValoreImpostato() {
+        return valoreImpostato;
+    }
+
     public boolean isDoppio() {
         if(valoreImpostato) {
-            valoreImpostato = false;
             return false; 
         }
         return valore1 == valore2;
