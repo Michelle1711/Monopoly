@@ -37,6 +37,9 @@ public class Partita {
                 contatoreTurni++;
                 System.out.println("\n--------------------------------");
                 System.out.println("Turno " + contatoreTurni + ": " + giocatoreCorrente.getNome() + " [Budget: " + giocatoreCorrente.getBudget() + "]");
+                //System.out.println(giocatoreCorrente.getProprietaPossedute());
+                giocatoreCorrente.stampaProprietaPossedute();
+                System.out.println();
                 eseguiTurno(giocatoreCorrente);
             }
             

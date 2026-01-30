@@ -195,6 +195,36 @@ public class Giocatore {
     public String getPedina() {
         return pedina;
     }
+    public String getProprietaPossedute() {
+        StringBuilder sb = new StringBuilder();
+        for (Casella c : proprietaPossedute) {
+            sb.append(c.getNome()).append(", ");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 2); // Rimuove l'ultima virgola e spazio
+        }
+        return sb.toString();
+    }
+
+    public void stampaProprietaPossedute(){
+        String RESET = "\u001B[0m"; 
+        String codiceColore = "";
+        String cella="";
+        System.out.print("Proprietà possedute: ");
+        for (Casella c : proprietaPossedute) {
+            if(c instanceof Terreno){
+                Colore col = ((Terreno) c).getColore();
+                if (col != null) {
+                    codiceColore = col.getCodice(); // Usa il metodo getter dell'Enum
+                }
+                cella = codiceColore + "[" + c.getNome() + "]" + RESET+", ";
+            }else{
+                cella = "[" + c.getNome() + "]"+ RESET+", ";
+            }
+            System.out.print(cella);
+        }
+        
+    }
 
     @Override
     public String toString() {
