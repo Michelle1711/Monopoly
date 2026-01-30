@@ -142,12 +142,13 @@ public class Tabellone{
         String[][] grigliaCase = new String[lato][lato];
         
         String RESET = "\u001B[0m";
+        String SPAZIO_VUOTO = "            ";
 
         // 1. Inizializzazione a vuoto
         for (int i = 0; i < lato; i++) {
             for (int j = 0; j < lato; j++) {
-                grigliaNomi[i][j] = "              "; 
-                grigliaCase[i][j] = "              "; 
+                grigliaNomi[i][j] = SPAZIO_VUOTO; 
+                grigliaCase[i][j] = SPAZIO_VUOTO;
             }
         }
 
