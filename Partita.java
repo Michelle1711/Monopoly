@@ -80,9 +80,11 @@ public class Partita {
             }
         }
         if (modalitaCheat) {
-            System.out.println("[CHEAT] Inserisci il valore dei dadi (2-12) per " + giocatore.getNome() + ": ");
-            int valoreForzato = Leggi.unInt(); // Legge l'intero da tastiera
-            
+            int valoreForzato;
+            do{
+                System.out.println("[CHEAT] Inserisci il valore dei dadi (2-12) per " + giocatore.getNome() + ": ");
+                valoreForzato = Leggi.unInt(); // Legge l'intero da tastiera
+            } while (valoreForzato < 2 || valoreForzato > 12);
             // Imposta il valore "truccato" nell'oggetto dadi
             dadi.setValoreTruccato(valoreForzato);
         }
