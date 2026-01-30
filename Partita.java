@@ -94,6 +94,16 @@ public class Partita {
         dadi.lancia();
 
         giocatore.muovi(dadi); 
+        if (giocatore.isInPrigione()) {
+            if (giocatore.getTurniFermo() > 0) {
+                System.out.println(giocatore.getNome() + " è bloccato in prigione per altri " + giocatore.getTurniFermo() + " turni.");
+                giocatore.decrementaTurniFermo();
+                return; // Salta il turno
+            } else {
+                System.out.println(giocatore.getNome() + " esce di prigione!");
+                giocatore.setInPrigione(false);
+            }
+        }
         tabellone.stampaTabelloneGioco(listaGiocatori); // Aggiorna la stampa dopo il movimento
         Casella casellaCorrente = giocatore.getCasella();
         System.out.println("Posizione: " + casellaCorrente.getNome());

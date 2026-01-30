@@ -38,8 +38,8 @@ public class Giocatore {
         if (nDoppio == 3) {
             System.out.println("Tre doppi consecutivi! Vai in prigione.");
             nDoppio = 0;
-            // La logica per spostarlo in prigione verrà gestita dalla classe Partita
-            // qui settiamo solo il flag per sicurezza
+            inPrigione = true;
+            turniFermo = 3; // Deve stare 3 turni in prigione
             return; 
         }
 
